@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+[ ! -d ${PROJECT_DIR} ] && mkdir ${PROJECT_DIR}
+
 cd ${PROJECT_DIR}
 
 npm init --yes

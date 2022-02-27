@@ -1,25 +1,29 @@
+if not exist %PROJECT_DIR% (
+    mkdir %PROJECT_DIR%
+)
+
 cd %PROJECT_DIR%
 
 npm init --yes
 
-IF %DJSVER%==12 (
+if %DJSVER%==12 (
     npm i discord.js@12
-) ELSE (
+) else (
     npm i discord.js@13
 )
 
-IF %USEKOMM%==1 (
+if %USEKOMM%==1 (
     npm i discord-kommando.js
 )
 
-IF %USEDOK% (
-    IF %DJSVER%==12 (
+if %USEDOK% (
+    if %DJSVER%==12 (
         npm i dokdo@0.4
-    ELSE (
+    else (
         npm i dokdo@0.5
     )
 )
 
-IF %USEDISBUT%==1 (
+if %USEDISBUT%==1 (
     npm i discord-buttons
 )
