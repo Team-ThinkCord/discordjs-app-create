@@ -1,0 +1,19 @@
+{
+  "name": "discordjs-app-create",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "create": "node ."
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "chalk-animation": "^1.6.0",
+    "figlet": "^1.5.2",
+    "gradient-string": "^2.0.0",
+    "inquirer": "^8.2.0",
+    "nanospinner": "^1.0.0"
+  }
+}
