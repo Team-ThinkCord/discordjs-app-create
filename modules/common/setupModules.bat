@@ -2,10 +2,12 @@ cd %PROJECT_DIR%
 
 npm init --yes
 
+npm i dotenv 
+
 IF %DJSVER%==12 (
-    npm i discord.js@12
+    npm i discord.js@12.5.3
 ) ELSE (
-    npm i discord.js@13
+    npm i discord.js@latest
 )
 
 IF %USEKOMM%==1 (
@@ -14,9 +16,9 @@ IF %USEKOMM%==1 (
 
 IF %USEDOK% (
     IF %DJSVER%==12 (
-        npm i dokdo@0.4
+        npm i dokdo@djsv12
     ELSE (
-        npm i dokdo@0.5
+        npm i dokdo@latest
     )
 )
 

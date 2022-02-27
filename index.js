@@ -8,6 +8,7 @@ import figlet from 'figlet';
 import * as fs from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import * as createModule from './utils/createModule.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -18,6 +19,7 @@ let projectName;
 let useKommando;
 let useDisbut;
 let useDokdo;
+let botPrefix;
 
 const djsVersions = ['Discord.js v12 (12.5.3 | Recommended)', 'Discord.js v13 (Latest)'];
 
@@ -88,6 +90,18 @@ async function askUseDisbut() {
     useDisbut = usedisbut.useDisbut;
 }
 
+async function askPrefix() {
+    const prefix = await inquirer.prompt({
+        type: 'input',
+        name: 'prefix',
+        message: 'What is the prefix of your bot?',
+        default() {
+            return '!';
+        },
+    });
+    botPrefix = prefix.prefix;
+}
+
 async function askUseDokdo() {
     const usedokdo = await inquirer.prompt({
         type: 'confirm',
@@ -115,12 +129,15 @@ function fileExists(dir, file) {
 
 async function createProject() {
     console.clear();
-    console.log(chalk.hex('#00bcd4').bold('Attempting to Creating project...\n'));
+    console.log(chalk.hex('#00bcd4').bold('Attempting to Create project...\n'));
 
     let dir = `${process.cwd()}/${projectName}`
 
     if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
+        fs.mkdir(dir, (err) => {
+            if (err) throw err;
+            console.log(chalk.hex('#00bcd4').bold('Successfully Created project directory!\n'));
+        });
     }
 
     fs.readdirSync(dir).forEach((file) => {
@@ -130,22 +147,41 @@ async function createProject() {
         }
     });
 
-    fs.createWriteStream(`${__dirname}/modules/main.js`);
-    console.log(chalk.hex('#00bcd4').bold('Attempting to Creating src/main.js...\n'));
+    if (!fs.existsSync(`${dir}/src`)) {
+        console.log(chalk.hex('#00bcd4').bold('Attempting to Make Directory...\n'));
 
+        fs.mkdir(`${dir}/src`, (err) => {
+            if (err) throw err;
+            console.log(chalk.hex('#00bcd4').bold(`Successfully Created ${dir}/src/ !\n`));
+        });
+    }
+
+    console.log(chalk.hex('#00bcd4').bold('Attempting to Create src/main.js...\n'));
+
+    // Check is src/main.js exists
     if (fileExists('src', 'main.js')) {
         console.log(chalk.hex('#FF0000').bold('It seems that the src/main.js already exists in that folder'));
         process.exit();
     }
 
+    const module = fs.readFileSync(`${__dirname}/modules/${djsVersion === djsVersions[0] ? 'v12' : 'latest'}/main.js`, 'utf8');
+    createModule.createSampleModule(module, djsVersion, useKommando, useDisbut, useDokdo, botPrefix, dir, __dirname, djsVersions);
 
 }
+
+// process.on('exit', () => {
+//     const exists = fs.existsSync(`${__dirname}/modules/main.js`);
+//     if (exists) {
+//         fs.unlinkSync(`${__dirname}/modules/main.js`);
+//     }
+// });
 
 console.clear();
 await welcome();
 await askProjectName();
 await askDjsVersion();
 await askUseKommando();
+await askPrefix();
 await askUseDokdo();
 await askUseDisbut();
 await createProject();

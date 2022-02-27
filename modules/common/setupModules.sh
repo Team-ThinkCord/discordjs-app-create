@@ -4,6 +4,8 @@ cd ${PROJECT_DIR}
 
 npm init --yes
 
+npm i dotenv
+
 if [ ${DJSVER} -eq 12 ]; then
     npm i discord.js@12
 else
