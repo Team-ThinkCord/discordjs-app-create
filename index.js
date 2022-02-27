@@ -6,12 +6,13 @@ import gradient from 'gradient-string';
 import chalkAnimation from 'chalk-animation';
 import figlet from 'figlet';
 
-const args = process.argv;
+let args = process.argv.slice(2);
 
 let djsVersion;
 let projectName;
 let useKommando;
 let useDisbut;
+let useDokdo;
 
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
@@ -20,17 +21,11 @@ async function welcome() {
 
     await sleep(1000);
     console.clear();
-
-    if (args.length >= 0) {
-        return;
-    }
-    if (args[0] !== '12' || args[0] !== '13') {
-        throw new Error('Invalid version');
-    }
-    djsVersion = args[0];
 }
+
 async function askProjectName() {
-    if (args[1]) {
+    if (args[0]) {
+        projectName = args[0];
         return;
     }
     const prj = await inquirer.prompt({
@@ -44,12 +39,28 @@ async function askProjectName() {
     projectName = prj.projectName;
 }
 
+async function askDjsVersion() {
+    const djsVersions = ['Discord.js v12 (12.5.3 | Recommended)', 'Discord.js v13 (Latest)'];
+    const djsver = await inquirer.prompt({
+        type: 'list',
+        name: 'djsVersion',
+        message: 'Please select the Discord.js version you want to use',
+        choices: djsVersions,
+        default() {
+            return djsVersion[0];
+        },
+    });
+    djsVersion = djsver.djsVersion;
+}
+
 async function askUseKommando() {
     const usekommando = await inquirer.prompt({
         type: 'confirm',
         name: 'useKommando',
-        message: 'Do you want to use Kommando?',
-        default: true,
+        message: 'Do you want to use Discord-Kommando.js?',
+        default() {
+            return true;
+        },
     });
 
     useKommando = usekommando.useKommando;
@@ -63,14 +74,31 @@ async function askUseDisbut() {
         type: 'confirm',
         name: 'useDisbut',
         message: 'Do you want to use Disbut?',
-        default: true,
+        default() {
+            return true;
+        },
     });
 
     useDisbut = usedisbut.useDisbut;
 }
 
+async function askUseDokdo() {
+    const usedokdo = await inquirer.prompt({
+        type: 'confirm',
+        name: 'useDokdo',
+        message: 'Do you want to use Dokdo?',
+        default() {
+            return true;
+        },
+    });
+
+    useDokdo = usedokdo.useDokdo;
+}
+
 console.clear();
 await welcome();
 await askProjectName();
+await askDjsVersion();
 await askUseKommando();
+await askUseDokdo();
 await askUseDisbut();
