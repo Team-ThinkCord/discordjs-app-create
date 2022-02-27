@@ -5,6 +5,11 @@ import inquirer from 'inquirer';
 import gradient from 'gradient-string';
 import chalkAnimation from 'chalk-animation';
 import figlet from 'figlet';
+import * as fs from 'fs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 let args = process.argv.slice(2);
 
@@ -13,6 +18,8 @@ let projectName;
 let useKommando;
 let useDisbut;
 let useDokdo;
+
+const djsVersions = ['Discord.js v12 (12.5.3 | Recommended)', 'Discord.js v13 (Latest)'];
 
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
@@ -40,14 +47,13 @@ async function askProjectName() {
 }
 
 async function askDjsVersion() {
-    const djsVersions = ['Discord.js v12 (12.5.3 | Recommended)', 'Discord.js v13 (Latest)'];
     const djsver = await inquirer.prompt({
         type: 'list',
         name: 'djsVersion',
-        message: 'Please select the Discord.js version you want to use',
+        message: 'Please select the Discord.js version you want to use (use arrow keys for select)',
         choices: djsVersions,
         default() {
-            return djsVersion[0];
+            return djsVersions[0];
         },
     });
     djsVersion = djsver.djsVersion;
@@ -67,7 +73,7 @@ async function askUseKommando() {
 }
 
 async function askUseDisbut() {
-    if (djsVersion !== '12') {
+    if (djsVersion !== djsVersions[0]) {
         return
     }
     const usedisbut = await inquirer.prompt({
@@ -95,6 +101,46 @@ async function askUseDokdo() {
     useDokdo = usedokdo.useDokdo;
 }
 
+function fileExists(dir, file) {
+    let prjdir = `${process.cwd()}/${projectName}`
+    if (dir.startsWith('/')) {
+        dir.slice(1);
+    }
+    if (dir.endsWith('/')) {
+        dir.slice(0, -1);
+    }
+    return fs.existsSync(`${prjdir}/${dir}/${file}`);
+}
+
+
+async function createProject() {
+    console.clear();
+    console.log(chalk.hex('#00bcd4').bold('Attempting to Creating project...\n'));
+
+    let dir = `${process.cwd()}/${projectName}`
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+
+    fs.readdirSync(dir).forEach((file) => {
+        if (file === 'package.json') {
+            console.log(chalk.hex('#FF0000').bold('It seems that the NodeJS project already exists in that folder'));
+            process.exit();
+        }
+    });
+
+    fs.createWriteStream(`${__dirname}/modules/main.js`);
+    console.log(chalk.hex('#00bcd4').bold('Attempting to Creating src/main.js...\n'));
+
+    if (fileExists('src', 'main.js')) {
+        console.log(chalk.hex('#FF0000').bold('It seems that the src/main.js already exists in that folder'));
+        process.exit();
+    }
+
+
+}
+
 console.clear();
 await welcome();
 await askProjectName();
@@ -102,3 +148,4 @@ await askDjsVersion();
 await askUseKommando();
 await askUseDokdo();
 await askUseDisbut();
+await createProject();
