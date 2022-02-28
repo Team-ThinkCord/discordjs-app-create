@@ -12,7 +12,7 @@ import * as createModule from './utils/createModule.js';
 import * as createPackage from './utils/projectInitializer.js';
 import * as createKommando from './utils/setupKommando.js';
 import * as lastProcess from './utils/last.js';
-
+import { djsVersions } from './utils/conf.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -24,8 +24,6 @@ let useKommando;
 let useDisbut;
 let useDokdo;
 let botPrefix;
-
-const djsVersions = ['Discord.js v12 (12.5.3 | Recommended)', 'Discord.js v13 (Latest)'];
 
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 

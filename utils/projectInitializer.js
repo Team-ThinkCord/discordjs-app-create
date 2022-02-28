@@ -2,6 +2,7 @@ import os from 'os';
 import chalk from 'chalk';
 import * as child from 'child_process';
 import * as path from 'path';
+import { djsVersions } from './conf.js';
 
 import fs from 'fs';
 
@@ -23,10 +24,10 @@ export const initProject = (options) => {
             let chp = child.execSync(`start ${options.rootdir}\\modules\\common\\setupModules.cmd`, {
                 env: {
                     PROJECT_DIR: path.isAbsolute(options.prjdir) ? options.prjdir : process.cwd() + "\\" + options.prjdir,
-                    DJSVER: options.djsVersion,
-                    USEKOMM: options.useKommando,
-                    USEDOK: options.useDokdo,
-                    USEDISBUT: options.useDisbut
+                    DJSVER: options.djsVersion === djsVersions[0] ? 12 : 13,
+                    USEKOMM: options.useKommando ? 1 : 0,
+                    USEDOK: options.useDokdo ? 1 : 0,
+                    USEDISBUT: options.useDisbut ? 1 : 0
                 }
             });
         } catch {
@@ -35,22 +36,26 @@ export const initProject = (options) => {
             console.log(chalk.cyan.bold("Module setup succeeded.\n"));
         }
     } else {
-        console.log(chalk.cyan.bold('Running setupModules.sh'));
         try {
-            let chp = child.execSync(`sh ${options.rootdir}/modules/common/setupModules.sh`, {
+            let sh = fs.readFileSync(`${options.rootdir}/modules/common/setupModules.sh`, 'utf8');
+            fs.writeFileSync(`${options.prjdir}/setupModules.sh`, sh);
+
+            console.log(chalk.cyan.bold('Running setupModules.sh'));
+            let chp = child.execSync(`sh ${options.prjdir}/setupModules.sh`, {
                 env: {
                     PROJECT_DIR: path.isAbsolute(options.prjdir) ? options.prjdir : process.cwd() + "/" + options.prjdir,
-                    DJSVER: options.djsVersion,
-                    USEKOMM: options.useKommando,
-                    USEDOK: options.useDokdo,
-                    USEDISBUT: options.useDisbut
+                    DJSVER: options.djsVersion === djsVersions[0] ? 12 : 13,
+                    USEKOMM: options.useKommando ? 1 : 0,
+                    USEDOK: options.useDokdo ? 1 : 0,
+                    USEDISBUT: options.useDisbut ? 1 : 0
                 }
             });
+            console.log(chalk.cyan.bold("Module setup succeeded.\n"));
         } catch {
-            console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again with Administrator permission\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
+            console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
             process.exit(1);
         } finally {
-            console.log(chalk.cyan.bold("Module setup succeeded.\n"));
+            fs.unlinkSync(`${options.prjdir}/setupModules.sh`);
         }
     }
 }

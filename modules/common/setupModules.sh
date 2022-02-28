@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
-[ ! -d  ${PROJECT_DIR} ] && mkdir ${PROJECT_DIR}
-cd ${PROJECT_DIR}
+
 npm init --yes
 npm i dotenv@latest
 if [ ${DJSVER} -eq 12 ]; then
@@ -24,3 +23,4 @@ fi
 if [ ${USEDISBUT} -eq 1 ]; then
     npm i discord-buttons@latest
 fi
+exit 0
