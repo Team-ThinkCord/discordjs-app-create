@@ -167,7 +167,7 @@ async function createProject() {
     }
 
     const module = fs.readFileSync(`${__dirname}/modules/${djsVersion === djsVersions[0] ? 'v12' : 'latest'}/main.js`, 'utf8');
-    createModule.createSampleModule(module, djsVersion, useKommando, useDisbut, useDokdo, botPrefix, dir, __dirname, djsVersions);
+    createModule.createSampleModule(module, djsVersion, useKommando, useDisbut, useDokdo, botPrefix, dir, __dirname);
     createPackage.initProject({
         djsVersion: `${djsVersion === djsVersions[0] ? '12' : '13'}`,
         prjdir: dir,
@@ -179,7 +179,7 @@ async function createProject() {
     });
 
     await sleep(3000);
-    createPackage.installModules({
+    await createPackage.installModules({
         rootdir: __dirname,
         prjdir: dir,
         djsVersion: djsVersion,
@@ -189,7 +189,8 @@ async function createProject() {
         useKommando: useKommando,
     });
 
-    await sleep(3000);
+    // Make cli app to wait for modules to install
+    await sleep(15000);
 
     createKommando.kommandoSetup(dir, __dirname);
     await lastProcess.lastProcess(dir, __dirname, projectName);
@@ -204,6 +205,7 @@ async function finish() {
     console.log(chalk.hex('#00bcd4').bold('_________________________________________________________________________'));
     console.log(chalk.hex('#00bcd4').bold("'npm run start' or 'node .' to run application!\n\n"));
     console.log(chalk.hex('#00bcd4').bold("Thanks for using our CLI App!"));
+    console.log(chalk.hex('#00bcd4').bold('(If this process doesn\'t finish automatically, that means modules are not installed yet, then please wait for it)'));
     console.log(chalk.hex('#00bcd4').bold('-------------------------------------------------------------------------'));
 }
 

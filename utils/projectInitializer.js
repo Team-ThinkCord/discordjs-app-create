@@ -42,7 +42,7 @@ export const editPackageJson = (prjdir, prjname) => {
         process.exit(1);
     }
     if (prjname === ".") {
-        let dir_ = prjdir.split("/")[prjdir.split("/").length - 2];
+        let dir_ = path.basename(prjdir.replace(`${os.platform === 'win32' ? '\\.' : '/.'}`, ''));
         packageJson.name = dir_;
     } else {
         packageJson.name = prjname;
@@ -71,49 +71,36 @@ export const editPackageJson = (prjdir, prjname) => {
  * @param {boolean} options.useDokdo
  * @param {boolean} options.useKommando
  */
-export function installModules(options) {
-    child.spawn('npm', ['install', 'dotenv'], {
-        cwd: options.prjdir,
-        shell: true,
-    });
+export async function installModules(options) {
+    let djs;
+    let dokdo;
+    let kommando;
+    let disbut;
 
     if (options.djsVersion === djsVersions[0]) {
-        child.spawn('npm', ['install', 'discord.js@12.5.3'], {
-            cwd: options.prjdir,
-            shell: true,
-        });
+        djs = 'discord.js@12.5.3';
     } else {
-        child.spawn('npm', ['install', 'discord.js@latest'], {
-            cwd: options.prjdir,
-            shell: true,
-        });
+        djs = 'discord.js@latest'
     }
 
     if (options.useKommando) {
-        child.spawn('npm', ['install', 'discord-kommando.js@latest'], {
-            cwd: options.prjdir,
-            shell: true,
-        });
+        kommando = 'kommando@latest';
     }
 
     if (options.useDokdo) {
         if (options.djsVersion === djsVersions[0]) {
-            child.spawn('npm', ['install', 'dokdo@djsv12'], {
-                cwd: options.prjdir,
-                shell: true,
-            });
+            dokdo = 'dokdo@djsv12';
         } else {
-            child.spawn('npm', ['install', 'dokdo@latest'], {
-                cwd: options.prjdir,
-                shell: true,
-            });
+            dokdo = 'dokdo@latest';
         }
     }
 
     if (options.useDisbut) {
-        child.spawn('npm', ['install', 'discord-disbut.js@4.0.0'], {
-            cwd: options.prjdir,
-            shell: true,
-        });
+        disbut = 'discord-buttons@4.0.0';
     }
+
+    child.spawn('npm', ['install', 'dotenv', djs, dokdo, kommando, disbut], {
+        cwd: options.prjdir,
+        shell: true,
+    });
 }

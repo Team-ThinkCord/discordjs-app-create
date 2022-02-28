@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as onmsg from './onMessages.js';
 import chalk from 'chalk';
+import { djsVersions } from './conf.js';
 
 /**
  * @param {string} module
@@ -12,8 +13,8 @@ import chalk from 'chalk';
  * @param {string} prjdir
  * @param {string} rootdir
  */
-export function createSampleModule(module, djsVersion, useKommando, useDisbut, useDokdo, botPrefix, prjdir, rootdir, djsVersions) {
-    const onMessage = `${djsVersion === djsVersion[0] ? onmsg.v12OnMessage : onmsg.latestOnMessage}`;
+export function createSampleModule(module, djsVersion, useKommando, useDisbut, useDokdo, botPrefix, prjdir, rootdir) {
+    const onMessage = `${djsVersion === djsVersions[0] ? onmsg.v12OnMessage : onmsg.latestOnMessage}`;
 
     const code =
 
