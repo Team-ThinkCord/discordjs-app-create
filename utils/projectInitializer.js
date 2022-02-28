@@ -72,6 +72,18 @@ export function installModules(options) {
         shell: true,
     });
 
+    if (options.djsVersion === djsVersions[0]) {
+        child.spawn('npm', ['install', 'discord.js@12.5.3'], {
+            cwd: options.prjdir,
+            shell: true,
+        });
+    } else {
+        child.spawn('npm', ['install', 'discord.js@latest'], {
+            cwd: options.prjdir,
+            shell: true,
+        });
+    }
+
     if (options.useKommando) {
         child.spawn('npm', ['install', 'discord-kommando.js@latest'], {
             cwd: options.prjdir,
@@ -95,18 +107,6 @@ export function installModules(options) {
 
     if (options.useDisbut) {
         child.spawn('npm', ['install', 'discord-disbut.js@4.0.0'], {
-            cwd: options.prjdir,
-            shell: true,
-        });
-    }
-
-    if (options.djsVersion === djsVersions[0]) {
-        child.spawn('npm', ['install', 'discord.js@12.5.3'], {
-            cwd: options.prjdir,
-            shell: true,
-        });
-    } else {
-        child.spawn('npm', ['install', 'discord.js@latest'], {
             cwd: options.prjdir,
             shell: true,
         });
