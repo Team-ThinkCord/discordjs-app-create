@@ -20,10 +20,10 @@ export function createSampleModule(module, djsVersion, useKommando, useDisbut, u
 
         `${module}\n\n` +
         `${useKommando ? `const kommando = require('discord-kommando.js');\n` : ''}` +
-        `${useDisbut ? `const Disbut = require('discord-buttons');\n` : ''}` +
+        `${useDisbut ? `const disbut = require('discord-buttons');\n` : ''}` +
         `${useDokdo ? `const Dokdo = require('dokdo');\n` : ''}` +
         `${useKommando || useDokdo ? `const prefix = '${botPrefix}';\n\n` : ''}` +
-        `${useKommando ? `const options = {}; // Kommando Options \n\n` + `// Setup Kommando \nkommando.setupKommando('src/commands', prefix, options);\n\n` : ''}` +
+        `${useKommando ? `const options = {messages: { COMMAND_LOAD_MESSAGE: "Loaded command %s from %s" } }; // Kommando Options \n\n` + `// Setup Kommando \nkommando.setupKommando('src/commands', prefix, options);\n\n` : ''}` +
         `${useDokdo ? `// Setup Dokdo \nconst DokdoHandler = new Dokdo(client, { aliases: ['dokdo', 'dok'], prefix: prefix });\n\n` : ''}` +
         `${useDisbut ? `// Setup Disbut \ndisbut(client);\n\n` : ''}` +
         `client.on('ready', () => {\n` +
