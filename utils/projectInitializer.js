@@ -18,9 +18,9 @@ export const initProject = (options) => {
     console.log(chalk.cyan.bold('Initializing project...'));
     console.log(chalk.cyan.bold(`Operating System : ${os.platform()}`));
     if (os.platform() === "win32") {
-        console.log(chalk.cyan.bold('Running setupModules.bat'));
+        console.log(chalk.cyan.bold('Running setupModules.cmd'));
         try {
-            let chp = child.execSync(`start ${options.rootdir}\\modules\\common\\setupModules.bat`, {
+            let chp = child.execSync(`start ${options.rootdir}\\modules\\common\\setupModules.cmd`, {
                 env: {
                     PROJECT_DIR: path.isAbsolute(options.prjdir) ? options.prjdir : process.cwd() + "\\" + options.prjdir,
                     DJSVER: options.djsVersion,

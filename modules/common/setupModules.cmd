@@ -26,4 +26,4 @@ IF %USEDISBUT%==1 (
 echo Finished installing modules
 echo You can close this Window now
 echo ----------------------------------------------------
-pause
+exit

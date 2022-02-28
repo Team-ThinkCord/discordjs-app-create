@@ -187,7 +187,7 @@ async function createProject() {
 async function finish() {
     console.clear();
     console.log(chalk.hex('#00bcd4').bold("Successfully created Discord.js application!\n\n"));
-    console.log(chalk.hex('#00bcd4').bold("'npm run start' or 'node .' to run application!\n"));
+    console.log(chalk.hex('#00bcd4').bold("'npm run start' or 'node .' to run application!\n\n"));
     console.log(chalk.hex('#00bcd4').bold("Thanks for using our CLI App!"));
 }
 
