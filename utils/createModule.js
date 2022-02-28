@@ -37,8 +37,9 @@ export function createSampleModule(module, djsVersion, useKommando, useDisbut, u
 
     try {
         fs.writeFileSync(`${rootdir}/modules/main.js`, code);
-    } catch (e) {
-        throw e;
+    } catch {
+        console.error(chalk.red('Error While Creating main.js') + chalk.cyan('Please try again\n') + chalk.cyan('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
+        process.exit(1);
     } finally {
         console.log(chalk.hex('#00bcd4').bold('Created Sample Module: main.js!\n'));
         console.log(chalk.hex('#00bcd4').bold('Edited Sample Module: main.js!\n'));

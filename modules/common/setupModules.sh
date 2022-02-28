@@ -1,11 +1,8 @@
 #!/usr/bin/env sh
-
+[ ! -d  ${PROJECT_DIR} ] && mkdir ${PROJECT_DIR}
 cd ${PROJECT_DIR}
-
 npm init --yes
-
-npm i dotenv
-
+npm i dotenv@latest
 if [ ${DJSVER} -eq 12 ]; then
     npm i discord.js@12.5.3
 else
@@ -13,7 +10,7 @@ else
 fi
 
 if [ ${USEKOMM} -eq 1 ]; then
-    npm i discord-kommando.js
+    npm i discord-kommando.js@latest
 fi
 
 if [ ${USEDOK} -eq 1 ]; then
@@ -25,5 +22,5 @@ if [ ${USEDOK} -eq 1 ]; then
 fi
 
 if [ ${USEDISBUT} -eq 1 ]; then
-    npm i discord-buttons
+    npm i discord-buttons@latest
 fi

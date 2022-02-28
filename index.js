@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import * as createModule from './utils/createModule.js';
+import * as createPackage from './utils/projectInitializer.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -166,7 +167,16 @@ async function createProject() {
 
     const module = fs.readFileSync(`${__dirname}/modules/${djsVersion === djsVersions[0] ? 'v12' : 'latest'}/main.js`, 'utf8');
     createModule.createSampleModule(module, djsVersion, useKommando, useDisbut, useDokdo, botPrefix, dir, __dirname, djsVersions);
+    createPackage.initProject({
+        djsVersion: `${djsVersion === djsVersions[0] ? '12' : '13'}`,
+        prjdir: dir,
+        rootdir: __dirname,
+        useDisbut: useDisbut,
+        useDokdo: useDokdo,
+        useKommando: useKommando,
+    });
 
+    createPackage.editPackageJson(dir, projectName);
 }
 
 // process.on('exit', () => {
