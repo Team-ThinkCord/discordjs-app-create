@@ -7,9 +7,9 @@ npm init --yes
 npm i dotenv
 
 if [ ${DJSVER} -eq 12 ]; then
-    npm i discord.js@12
+    npm i discord.js@12.5.3
 else
-    npm i discord.js@13
+    npm i discord.js@latest
 fi
 
 if [ ${USEKOMM} -eq 1 ]; then
@@ -18,9 +18,9 @@ fi
 
 if [ ${USEDOK} -eq 1 ]; then
     if [ ${DJSVER} -eq 12 ]; then
-        npm i dokdo@0.4
+        npm i dokdo@djsv12
     else
-        npm i dokdo@0.5
+        npm i dokdo@latest
     fi
 fi
 
