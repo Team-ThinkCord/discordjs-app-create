@@ -10,6 +10,9 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import * as createModule from './utils/createModule.js';
 import * as createPackage from './utils/projectInitializer.js';
+import * as createKommando from './utils/setupKommando.js';
+import * as lastProcess from './utils/last.js';
+
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -177,14 +180,23 @@ async function createProject() {
     });
 
     createPackage.editPackageJson(dir, projectName);
+    createKommando.kommandoSetup(dir, __dirname);
+    lastProcess.lastProcess(dir, __dirname);
 }
 
-// process.on('exit', () => {
-//     const exists = fs.existsSync(`${__dirname}/modules/main.js`);
-//     if (exists) {
-//         fs.unlinkSync(`${__dirname}/modules/main.js`);
-//     }
-// });
+async function finish() {
+    console.clear();
+    console.log(chalk.hex('#00bcd4').bold("Successfully created Discord.js application!\n\n"));
+    console.log(chalk.hex('#00bcd4').bold("'npm run start' or 'node .' to run application!\n"));
+    console.log(chalk.hex('#00bcd4').bold("Thanks for using our CLI App!"));
+}
+
+process.on('exit', () => {
+    const exists = fs.existsSync(`${__dirname}/modules/main.js`);
+    if (exists) {
+        fs.unlinkSync(`${__dirname}/modules/main.js`);
+    }
+});
 
 console.clear();
 await welcome();
@@ -195,3 +207,4 @@ await askPrefix();
 await askUseDokdo();
 await askUseDisbut();
 await createProject();
+await finish();

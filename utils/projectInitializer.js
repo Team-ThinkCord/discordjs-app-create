@@ -74,6 +74,6 @@ export const editPackageJson = (prjdir, prjname) => {
         console.error(chalk.red.bold('Failed to edit package.json') + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
         process.exit(1);
     } finally {
-        console.log(chalk.cyan.bold('Edited package.json!'));
+        console.log(chalk.cyan.bold('Edited package.json!\n'));
     }
 }

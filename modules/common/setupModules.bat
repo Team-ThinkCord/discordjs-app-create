@@ -1,4 +1,7 @@
+@echo off
 cd %PROJECT_DIR%
+
+echo Please Don't Close This Window
 
 npm init --yes
 
@@ -25,3 +28,8 @@ IF %USEDOK% (
 IF %USEDISBUT%==1 (
     npm i discord-buttons
 )
+
+echo Finished installing modules
+echo You can close this Window now
+echo ----------------------------------------------------
+pause
