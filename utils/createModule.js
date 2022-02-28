@@ -31,7 +31,7 @@ export function createSampleModule(module, djsVersion, useKommando, useDisbut, u
         `});\n\n` +
         `${onMessage}\n` +
         `${useKommando ? `\t// Handle Kommando \n\t kommando.CommandHandler(message);\n\n` : ''}` +
-        `${useDokdo ? `\t// Handle Dokdo \n\tDokdoHandler.handle(message);\n` : ''}` +
+        `${useDokdo ? `\t// Handle Dokdo \n\tDokdoHandler.run(message);\n` : ''}` +
         `});\n\n` +
         `client.login(process.env.TOKEN);`
 
