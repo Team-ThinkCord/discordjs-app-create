@@ -42,9 +42,10 @@ export const editPackageJson = (prjdir, prjname) => {
         process.exit(1);
     }
     if (prjname === ".") {
-        prjname = path.basename(prjdir);
+        packageJson.name = path.basename(prjdir);
+    } else {
+        packageJson.name = prjname;
     }
-    packageJson.name = prjname;
     packageJson.scripts.start = "node .";
     packageJson.main = "src/main.js";
 
