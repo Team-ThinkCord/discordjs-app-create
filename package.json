@@ -1,13 +1,14 @@
 {
   "name": "discordjs-app-create",
   "version": "1.0.0",
-  "description": "",
   "main": "./index.js",
   "type": "module",
   "scripts": {
     "create": "node ."
   },
-  "bin": "./index.js",
+  "bin": {
+    "discordjs-app-create": "index.js"
+  },
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
@@ -22,6 +23,20 @@
     "gradient-string": "^2.0.0",
     "inquirer": "^8.2.0",
     "nanospinner": "^1.0.0",
+    "shelljs": "^0.8.5",
     "undefined": "^0.1.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KommandNyang/discordjs-app-create.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/KommandNyang/discordjs-app-create/issues"
+  },
+  "homepage": "https://github.com/KommandNyang/discordjs-app-create#readme",
+  "description": ""
 }

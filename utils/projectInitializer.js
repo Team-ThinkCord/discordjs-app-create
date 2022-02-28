@@ -3,14 +3,17 @@ import chalk from 'chalk';
 import * as child from 'child_process';
 import * as path from 'path';
 import { djsVersions } from './conf.js';
-
+import shelljs from 'shelljs';
 import fs from 'fs';
+
+const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
 /**
  * @param {Object} options
  * @param {string} options.rootdir
  * @param {string} options.prjdir
  * @param {string} options.djsVersion
+ * @param {string} options.prjname
  * @param {boolean} options.useDisbut
  * @param {boolean} options.useDokdo
  * @param {boolean} options.useKommando
@@ -30,32 +33,76 @@ export const initProject = (options) => {
                     USEDISBUT: options.useDisbut ? 1 : 0
                 }
             });
-        } catch {
+        } catch (e) {
+            console.log(e);
             console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
+            process.exit(1);
         } finally {
+            editPackageJson(options.prjdir, options.prjname);
             console.log(chalk.cyan.bold("Module setup succeeded.\n"));
         }
     } else {
         try {
-            let sh = fs.readFileSync(`${options.rootdir}/modules/common/setupModules.sh`, 'utf8');
-            fs.writeFileSync(`${options.prjdir}/setupModules.sh`, sh);
+            child.spawn('npm', ['init', '-y'], {
+                cwd: options.prjdir,
+                shell: true,
+            });
+
+            child.spawn('npm', ['install', 'dotenv'], {
+                cwd: options.prjdir,
+                shell: true,
+            });
+
+            if (options.useKommando) {
+                child.spawn('npm', ['install', 'discord-kommando.js@latest'], {
+                    cwd: options.prjdir,
+                    shell: true,
+                });
+            }
+
+            if (options.useDokdo) {
+                if (options.djsVersion === djsVersions[0]) {
+                    child.spawn('npm', ['install', 'dokdo@djsv12'], {
+                        cwd: options.prjdir,
+                        shell: true,
+                    });
+                } else {
+                    child.spawn('npm', ['install', 'dokdo@latest'], {
+                        cwd: options.prjdir,
+                        shell: true,
+                    });
+                }
+            }
+
+            if (options.useDisbut) {
+                child.spawn('npm', ['install', 'discord-disbut.js@latest'], {
+                    cwd: options.prjdir,
+                    shell: true,
+                });
+            }
+
+            if (options.djsVersion === djsVersions[0]) {
+                child.spawn('npm', ['install', 'discord.js@12.5.3'], {
+                    cwd: options.prjdir,
+                    shell: true,
+                });
+            } else {
+                child.spawn('npm', ['install', 'discord.js@latest'], {
+                    cwd: options.prjdir,
+                    shell: true,
+                });
+            }
 
             console.log(chalk.cyan.bold('Running setupModules.sh'));
-            let chp = child.execSync(`sh ${options.prjdir}/setupModules.sh`, {
-                env: {
-                    PROJECT_DIR: path.isAbsolute(options.prjdir) ? options.prjdir : process.cwd() + "/" + options.prjdir,
-                    DJSVER: options.djsVersion === djsVersions[0] ? 12 : 13,
-                    USEKOMM: options.useKommando ? 1 : 0,
-                    USEDOK: options.useDokdo ? 1 : 0,
-                    USEDISBUT: options.useDisbut ? 1 : 0
-                }
-            });
+
             console.log(chalk.cyan.bold("Module setup succeeded.\n"));
-        } catch {
+
+            sleep(3000);
+            editPackageJson(options.prjdir, options.prjname);
+        } catch (e) {
+            console.log(e);
             console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
             process.exit(1);
-        } finally {
-            fs.unlinkSync(`${options.prjdir}/setupModules.sh`);
         }
     }
 }
@@ -65,8 +112,9 @@ export const editPackageJson = (prjdir, prjname) => {
     try {
         let pkgjson = fs.readFileSync(`${prjdir}/package.json`, 'utf8');
         packageJson = JSON.parse(pkgjson);
-    } catch {
-        console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again with root permission\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
+    } catch (e) {
+        console.log(e);
+        console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
         process.exit(1);
     }
     packageJson.name = prjname;
@@ -75,7 +123,8 @@ export const editPackageJson = (prjdir, prjname) => {
 
     try {
         fs.writeFileSync(`${prjdir}/package.json`, JSON.stringify(packageJson));
-    } catch {
+    } catch (e) {
+        console.log(e)
         console.error(chalk.red.bold('Failed to edit package.json') + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
         process.exit(1);
     } finally {

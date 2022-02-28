@@ -175,9 +175,10 @@ async function createProject() {
         useDisbut: useDisbut,
         useDokdo: useDokdo,
         useKommando: useKommando,
+        prjname: projectName,
     });
 
-    createPackage.editPackageJson(dir, projectName);
+    sleep();
     createKommando.kommandoSetup(dir, __dirname);
     lastProcess.lastProcess(dir, __dirname);
 }
