@@ -1,9 +1,18 @@
-import os from 'os'
+import os from 'os';
+import chalk from 'chalk';
 
-function setupModules(useKommando, useDisbut, useDokdo, djsVersion) {
+/*
+   TODO : 
+   - run setupModules.bat or setupModules.sh
+   - edit projectName in package.json
+   - add .env file
+   - add .gitignore file
+ */
+
+export function setupModules(useKommando, useDisbut, useDokdo, djsVersion) {
 
 }
 
-function editPacakeJson(projectName, rootdir, prjdir) {
+export function editPacakeJson(projectName, rootdir, prjdir) {
 
 }
