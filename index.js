@@ -178,16 +178,33 @@ async function createProject() {
         prjname: projectName,
     });
 
-    sleep();
+    await sleep(3000);
+    createPackage.installModules({
+        rootdir: __dirname,
+        prjdir: dir,
+        djsVersion: djsVersion,
+        prjname: projectName,
+        useDisbut: useDisbut,
+        useDokdo: useDokdo,
+        useKommando: useKommando,
+    });
+
+    await sleep(3000);
+
     createKommando.kommandoSetup(dir, __dirname);
-    lastProcess.lastProcess(dir, __dirname);
+    await lastProcess.lastProcess(dir, __dirname, projectName);
+
+    await sleep(3000);
 }
 
 async function finish() {
     console.clear();
     console.log(chalk.hex('#00bcd4').bold("Successfully created Discord.js application!\n\n"));
+
+    console.log(chalk.hex('#00bcd4').bold('_________________________________________________________________________'));
     console.log(chalk.hex('#00bcd4').bold("'npm run start' or 'node .' to run application!\n\n"));
     console.log(chalk.hex('#00bcd4').bold("Thanks for using our CLI App!"));
+    console.log(chalk.hex('#00bcd4').bold('-------------------------------------------------------------------------'));
 }
 
 process.on('exit', () => {

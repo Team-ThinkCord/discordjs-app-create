@@ -1,7 +1,10 @@
 import chalk from 'chalk';
 import fs from 'fs';
+import { editPackageJson } from './projectInitializer.js';
 
-export function lastProcess(prjdir, rootdir) {
+const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
+
+export async function lastProcess(prjdir, rootdir, prjname) {
     // Setup Dotenv
     const dotenvModule = fs.readFileSync(`${rootdir}/modules/common/.env.example`, 'utf8');
     try {
@@ -47,4 +50,10 @@ export function lastProcess(prjdir, rootdir) {
     } finally {
         console.log(chalk.hex('#00bcd4').bold('Successfully Created README.md\n'));
     }
+
+    // Edit package.json
+
+    // Sleep for 3 seconds In case package.json is missing
+    await sleep(3000);
+    editPackageJson(prjdir, prjname);
 }
