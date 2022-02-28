@@ -41,6 +41,9 @@ export const editPackageJson = (prjdir, prjname) => {
         console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
         process.exit(1);
     }
+    if (prjname === ".") {
+        prjname = path.basename(prjdir);
+    }
     packageJson.name = prjname;
     packageJson.scripts.start = "node .";
     packageJson.main = "src/main.js";
