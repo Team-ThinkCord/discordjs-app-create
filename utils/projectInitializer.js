@@ -42,7 +42,8 @@ export const editPackageJson = (prjdir, prjname) => {
         process.exit(1);
     }
     if (prjname === ".") {
-        packageJson.name = path.basename(prjdir);
+        dir_ = prjdir.split("/")[prjdir.split("/").length - 2];
+        packageJson.name = dir_;
     } else {
         packageJson.name = prjname;
     }
