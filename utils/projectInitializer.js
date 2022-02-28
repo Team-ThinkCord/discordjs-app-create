@@ -84,7 +84,7 @@ export async function installModules(options) {
     }
 
     if (options.useKommando) {
-        kommando = 'kommando@latest';
+        kommando = 'discord-kommando.js@latest';
     }
 
     if (options.useDokdo) {
