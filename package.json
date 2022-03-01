@@ -1,6 +1,6 @@
 {
   "name": "discordjs-app-create",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "./index.js",
   "type": "module",
   "scripts": {
