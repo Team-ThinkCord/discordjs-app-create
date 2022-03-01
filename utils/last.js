@@ -41,7 +41,8 @@ export async function lastProcess(prjdir, rootdir, prjname) {
     }
 
     // Write README.md
-    const readmeModule = fs.readFileSync(`${rootdir}/modules/common/README.md.example`, 'utf8');
+    const readmeModule = fs.readFileSync(`${rootdir}/modules/common/README.md.example`, 'utf8')
+        .replace(/{PROJECT_NAME}/g, prjdir.split("/").slice().pop());
     try {
         fs.writeFileSync(`${prjdir}/README.md`, readmeModule);
     } catch {

@@ -140,6 +140,8 @@ async function createProject() {
             if (err) throw err;
             console.log(chalk.hex('#00bcd4').bold('Successfully Created project directory!\n'));
         });
+        
+        await sleep(500);
     }
 
     fs.readdirSync(dir).forEach((file) => {
@@ -156,6 +158,8 @@ async function createProject() {
             if (err) throw err;
             console.log(chalk.hex('#00bcd4').bold(`Successfully Created ${dir}/src/ !\n`));
         });
+        
+        await sleep(500);
     }
 
     console.log(chalk.hex('#00bcd4').bold('Attempting to Create src/main.js...\n'));
