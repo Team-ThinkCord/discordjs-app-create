@@ -13,6 +13,7 @@ discordjs-app-create (project name)
 ### discord.js version
 
 v12 \*\*Recommended\*\*
+
 v13
 
 ### use discord-kommando.js
