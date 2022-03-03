@@ -21,7 +21,8 @@ export function createSampleModule(module, djsVersion, useKommando, useDisbut, u
         `${module}\n\n` +
         `${useKommando ? `const kommando = require('discord-kommando.js');\n` : ''}` +
         `${useDisbut ? `const disbut = require('discord-buttons');\n` : ''}` +
-        `${useDokdo ? `const Dokdo = require('dokdo');\n` : ''}` +
+        `${useDokdo ? `const Dokdo = require('dokdo');\n\n` : ''}` +
+        `${djsVersion === djsVersions[0] ? "const client = new Discord.Client()" : "const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS] });"}\n\n` +
         `${useKommando || useDokdo ? `const prefix = '${botPrefix}';\n\n` : ''}` +
         `${useKommando ? `const options = {messages: { COMMAND_LOAD_MESSAGE: "Loaded command %s from %s" } }; // Kommando Options \n\n` + `// Setup Kommando \nkommando.setupKommando('src/commands', prefix, options);\n\n` : ''}` +
         `${useDokdo ? `// Setup Dokdo \nconst DokdoHandler = new Dokdo(client, { aliases: ['dokdo', 'dok'], prefix: prefix });\n\n` : ''}` +
