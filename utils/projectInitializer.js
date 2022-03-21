@@ -26,7 +26,7 @@ export const initProject = (options) => {
 
     } catch (e) {
         console.log(e);
-        console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
+        console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/Team-ThinkCord/discordjs-app-create'));
         process.exit(1);
     }
 }
@@ -38,7 +38,7 @@ export const editPackageJson = (prjdir, prjname) => {
         packageJson = JSON.parse(pkgjson);
     } catch (e) {
         console.log(e);
-        console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
+        console.error(chalk.red.bold("Setup failed. \n") + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/Team-ThinkCord/discordjs-app-create'));
         process.exit(1);
     }
     if (prjname === ".") {
@@ -54,7 +54,7 @@ export const editPackageJson = (prjdir, prjname) => {
         fs.writeFileSync(`${prjdir}/package.json`, JSON.stringify(packageJson));
     } catch (e) {
         console.log(e)
-        console.error(chalk.red.bold('Failed to edit package.json') + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/KommandNyang/discordjs-app-create'));
+        console.error(chalk.red.bold('Failed to edit package.json') + chalk.cyan.bold('Please try again\n') + chalk.cyan.bold('If the problem persists, create an issue on https://github.com/Team-ThinkCord/discordjs-app-create'));
         process.exit(1);
     } finally {
         console.log(chalk.cyan.bold('Edited package.json!\n'));
