@@ -25,12 +25,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KommandNyang/discordjs-app-create.git"
+    "url": "git+https://github.com/Team-ThinkCord/discordjs-app-create"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/KommandNyang/discordjs-app-create/issues"
+    "url": "https://github.com/Team-ThinkCord/discordjs-app-create"
   },
-  "homepage": "https://github.com/KommandNyang/discordjs-app-create#readme",
+  "homepage": "https://github.com/Team-ThinkCord/discordjs-app-create",
   "description": ""
 }
